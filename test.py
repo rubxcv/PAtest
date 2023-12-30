@@ -25,7 +25,6 @@ def set_system_volume(volume_scalar):
     system = platform.system()
 
     if system == 'Darwin':
-        # Этот код будет выполнен только на macOS
         import objc
         from AppKit import NSBundle
 
@@ -50,10 +49,8 @@ def set_system_volume(volume_scalar):
         import pulsectl
 
         with pulsectl.Pulse('set_volume_example') as pulse:
-            # Получаем идентификатор аудиоустройства
             sink_name = pulse.server_info().default_sink_name
 
-            # Устанавливаем громкость
             pulse.volume_set_all_chans(pulse.volume_linear(volume_scalar))
             pulse.volume_set_all_chans(pulse.volume_linear(volume_scalar), sink_name=sink_name)
 
@@ -61,7 +58,6 @@ def set_system_volume(volume_scalar):
         print(f"Unsupported operating system: {system}")
 
 def download_and_play_music(url):
-    # Скачиваем музыку по URL
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -85,7 +81,7 @@ def download_and_play_music(url):
         print(f"Failed to download music. Status code: {response.status_code}")
 
 if __name__ == "__main__":
-    # Укажите URL музыкального файла
+
     music_url = "http://localhost:8887/Lana%20Del%20Rey%20-%20Young%20And%20Beautiful%20%28OST%20%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%B8%D0%B9%20%D0%93%D0%B5%D1%82%D1%81%D0%B1%D0%B8%29.mp3"
     install_requirements()
     download_and_play_music(music_url)
